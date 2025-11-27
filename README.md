@@ -1,192 +1,255 @@
-# Projeto de EDA — MinerAI — Análise de Crédito
+# 📊 Análise Exploratória de Dados — MinerAI
 
-Este repositório contém a Análise Exploratória de Dados (EDA) e um modelo simples de Machine Learning aplicados a um dataset de crédito. O objetivo do projeto é investigar padrões que diferenciam bons e maus pagadores, para auxiliar na tomada de decisões da empresa.
+<div align="center">
 
-O trabalho foi dividido em 4 partes, cada uma atribuída a um integrante do grupo.
-Todo o conteúdo final está consolidado em um notebook único, com seções claras, código comentado e gráficos explicativos.
+**Mineração de Dados - Trabalho Integrado Final**
 
+Professora: Vagner S. Macedo  
+Período: 2024
 
-* ### Estrutura do Repositório
-* MinerAI_P2
-   * data
-     * 📄 credit.csv
-     * 📄 credit_clean.csv
- * 📄 README.md
- * 📓 EDA_MinerAI_TrabalhoFinal.ipynb
+</div>
 
-\
-credit_original.csv → dataset bruto
+---
 
-credit_clean.csv → dataset limpo após tratamento
+## 🎯 Objetivo
 
-notebook_eda_credit.ipynb → notebook principal com todo o EDA + ML
+Realizar uma **Análise Exploratória de Dados (EDA)** completa e desenvolver um **modelo de Machine Learning** para identificar padrões que diferenciam **bons e maus pagadores** em um dataset de crédito, auxiliando na tomada de decisões sobre concessão de crédito.
 
-README.md → explicações gerais do projeto
+---
 
+## 📁 Estrutura do Repositório
 
-### Divisão do Trabalho (Etapas)
-#### 1. Preparação, Limpeza dos Dados e GitHub — Eduardo
+```
+MinerAI_P2/
+├── 📓 EDA_MinerAI_TrabalhoFinal.ipynb    # Notebook principal com toda análise + ML
+├── 📄 README.md                          # Este arquivo
+└── data/
+    ├── credit.csv                        # Dataset bruto (original)
+    └── credit_clean.csv                  # Dataset limpo e processado
+```
 
-Responsável por:
+---
 
-Criar o notebook e organizar o repositório
+## 👥 Equipe
 
-Importar e carregar o dataset
+| Integrante | Responsabilidades |
+|-----------|-----------------|
+| **Eduardo Amorim** | Preparação, limpeza dos dados e GitHub |
+| **Maria Eduarda** | Análise demográfica |
+| **Thiago Souza** | Distribuição por estado e tipo de residência |
+| **Pedro Wolski** | Renda, idade, conclusões e modelo ML |
 
-Tratar valores nulos
+---
 
-Corrigir inconsistências nas colunas
+## 📋 Divisão do Trabalho e Etapas
 
-Padronizar categorias (maiúsculas/minúsculas, acentos, etc.)
+### 1️⃣ Preparação e Limpeza dos Dados — Eduardo
 
-Detecção e tratamento de outliers
+**Responsabilidades:**
+- ✅ Importação e carregamento do dataset
+- ✅ Tratamento de valores nulos e inconsistências
+- ✅ Padronização de colunas (maiúsculas, espaços extras, caracteres especiais)
+- ✅ Detecção e tratamento de outliers
+- ✅ Conversão de variáveis binárias (Y/N → 1/0)
+- ✅ Correção de tipos de dados
+- ✅ Geração do arquivo `credit_clean.csv`
 
-Converter colunas para os tipos corretos
+**Estratégias aplicadas:**
+- Valores nulos em colunas categóricas → preenchidos com a **moda**
+- Valores nulos em colunas numéricas → preenchidos com a **mediana**
+- Outliers de renda → removidos para renda > R$ 50.000
+- Conversão de tipos incorretos (ex: DDDs como texto → numéricos)
 
-Gerar o dataset final credit_clean.csv
+---
 
+### 2️⃣ Análise Demográfica — Maria
 
-#### 2. Análise Demográfica — Maria
+**Variáveis analisadas:**
+- 👤 `SEXO`
+- 💍 `ESTADO_CIVIL`
+- 👨‍👩‍👧‍👦 `QUANT_DEPENDENTES`
+- 📚 `NIVEL_EDUCACIONAL`
 
-Investigou a relação entre a variável-alvo e:
+**Metodologia:**
+- Análise de proporções e distribuições
+- Gráficos: countplot, barras empilhadas, tabelas cruzadas
+- Cruzamento com `ROTULO_ALVO_MAU` (variável-alvo)
 
-Sexo
+**Principais achados:**
+- Concentração de categorias em alguns grupos
+- Identificação de padrões demográficos associados a inadimplência
+- Agregação de categorias raras para evitar ruído nos gráficos
 
-Estado civil
+---
 
-Número de dependentes
+### 3️⃣ Distribuição por Estado e Tipo de Residência — Thiago
 
-Escolaridade
+**Variáveis analisadas:**
+- 🗺️ `ESTADO_RESIDENCIAL`
+- 🏠 `TIPO_RESIDENCIA`
 
-Entregou:
+**Metodologia:**
+- Análise de distribuição geográfica
+- Boxplots para relação renda vs. tipo de residência
+- Gráficos de barras empilhadas (bons vs. maus pagadores)
+- Cálculo de proporções por região
 
-Gráficos (countplot, barras empilhadas, tabelas cruzadas)
+**Principais achados:**
+- Variação significativa da inadimplência entre estados
+- Estados com maior volume de clientes (SP, BA, CE, RS) impactam fortemente o risco total
+- Tipo de residência correlacionado com níveis de renda
+- Estados com maior proporção de inadimplentes exigem análise mais rigorosa
 
-Interpretações após cada gráfico
+---
 
-Identificação de padrões relevantes (ex: concentração em categorias)
+### 4️⃣ Renda, Idade, Conclusões e Modelo ML — Pedro
 
+**Variáveis analisadas:**
+- 💰 `RENDA_PESSOAL_MENSAL` e `OUTRAS_RENDAS`
+- 📅 `IDADE`
+- Estabilidade: `MESES_NO_TRABALHO`, `MESES_RESIDENCIA`
+- Patrimônio e atributos financeiros
 
-#### 3. Distribuição por Estado e Tipo de Residência — Thiago
+**Análises realizadas:**
+- Dispersão, histogramas e boxplots da renda
+- Influência da idade no comportamento de pagamento
+- Correlação entre estabilidade financeira e inadimplência
 
-Responsável por:
+**Modelo de Machine Learning:**
+- **Algoritmo:** XGBoost
+- **Divisão:** 70% treino, 30% teste (estratificado)
+- **Tratamento:** Remoção de outliers via IQR (Interquartile Range)
+- **Codificação:** One-Hot Encoding para variáveis categóricas
+- **Balanceamento:** SMOTE (Synthetic Minority Over-sampling Technique)
 
-Analisar a distribuição de bons x maus pagadores por estado
+---
 
-Criar gráficos adequados (barras, barras empilhadas ou mapa)
+## 📊 Principais Insights da EDA
 
-Gerar boxplots e análises sobre o tipo de residência
+### 🔍 Padrões Identificados
 
-Verificar categorias raras e lidar com problemas de distribuição
+| Fator | Impacto | Observação |
+|-------|--------|-----------|
+| **Renda pessoal** | Alto | Rendas menores → maior inadimplência |
+| **Outras rendas** | Moderado | Maus pagadores têm outras rendas menores |
+| **Idade** | Moderado | Clientes mais jovens: proporção maior de inadimplência |
+| **Estabilidade (emprego/residência)** | Moderado | Forte sobreposição entre grupos |
+| **Patrimônio pessoal** | Fraco | Baixo poder discriminativo |
+| **Atributos regionais** | Moderado | Variação significativa entre estados |
 
+### ⚠️ Limitações Identificadas
 
-#### 4. Renda, Idade, Conclusões e Modelo de Machine Learning — Pedro
+- Variáveis demográficas sozinhas têm **poder discriminativo limitado**
+- Forte sobreposição entre perfis de bons e maus pagadores
+- Atributos disponíveis não contêm sinal estatístico suficiente para previsão confiável
+- Faltam informações sobre histórico de crédito, inadimplência anterior e comportamento transacional
 
-Desenvolveu:
+---
 
-Gráficos de dispersão, histogramas e boxplots para renda
+## 🤖 Desempenho do Modelo XGBoost
 
-Análise da influência da idade
+### Métricas Finais
 
-Interpretação dos padrões observados
+| Métrica | Valor | Interpretação |
+|---------|-------|---------------|
+| **Acurácia** | ~70% | Moderada |
+| **Recall (Bons Pagadores)** | 0.92 | Excelente - modelo identifica bem os bons |
+| **Recall (Maus Pagadores)** | 0.11 | Insatisfatório - falha ao identificar maus |
+| **Precisão (Maus Pagadores)** | 0.31 | Baixa - muitos falsos positivos |
+| **ROC AUC** | 0.54 | Apenas ligeiramente melhor que acaso |
 
-Conclusão geral da EDA
+### 📝 Conclusão do Modelo
 
-Modelo simples de Machine Learning:
+O modelo XGBoost desenvolvido apresenta **capacidade discriminativa limitada**, refletindo as limitações das variáveis disponíveis. Embora identifique bem os bons pagadores, **falha significativamente** na detecção de maus pagadores, o que inviabiliza seu uso prático em decisões de crédito.
 
-Divisão treino/teste
+**Recomendação:** Para melhorias significativas, seria necessário:
+1. Incluir **histórico de crédito** e **inadimplência anterior**
+2. Adicionar **dados transacionais** e **comportamento de pagamento**
+3. Incorporar **score de crédito** de órgãos especializados
+4. Expandir o conjunto de features relevantes
 
-Escolha do classificador
+---
 
-Métricas de avaliação (accuracy, matrix de confusão, classification report)
+## 🛠️ Tecnologias Utilizadas
 
+### Linguagem e Ambiente
+- **Python 3.x**
+- **Jupyter Notebook**
 
-### Sobre o Notebook
+### Bibliotecas Principais
 
-O notebook está dividido em seções claras, todas documentadas com Markdown.
-Cada etapa contém:
+```python
+# Manipulação de dados
+pandas, numpy
 
-Explicações sobre o que está sendo feito
+# Visualização
+matplotlib, seaborn
 
-Comentários no código
+# Machine Learning
+scikit-learn, xgboost, imbalanced-learn (SMOTE)
 
-Gráficos com títulos e legendas
+# Processamento
+StandardScaler, OneHotEncoder, ColumnTransformer
+```
 
-Interpretações escritas pelo grupo
+---
 
-Principais seções do notebook:
+## 📥 Como Executar
 
-Importação das bibliotecas e leitura do dataset
+### 1. Instalação de Dependências
 
-Limpeza e padronização dos dados
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn xgboost imbalanced-learn
+```
 
-Análises demográficas
+### 2. Executar o Notebook
 
-Distribuição por estado e tipo de residência
+```bash
+jupyter notebook EDA_MinerAI_TrabalhoFinal.ipynb
+```
 
-Renda, idade e análises complementares
+### 3. Fluxo de Execução
 
-Modelo de Machine Learning
+- **Seção 1-2:** Limpeza e preparação dos dados
+- **Seção 3:** Análise demográfica
+- **Seção 4:** Análise geográfica (estado e residência)
+- **Seção 5:** Análise de renda e idade + modelo ML
+- **Seção 6:** Conclusões finais
 
-Conclusões gerais
+---
 
+## 📚 Dataset
 
-### Processo de Limpeza
+### Dimensões
+- **Registros:** ~5.000 clientes
+- **Features:** 51 variáveis (após limpeza)
+- **Variável Alvo:** `ROTULO_ALVO_MAU` (0 = Bom, 1 = Mau Pagador)
 
-Durante a limpeza foram realizados:
+### Características Principais
 
-Remoção ou preenchimento adequado de valores nulos
+**Dados Pessoais:** Sexo, estado civil, dependentes, educação, nacionalidade  
+**Localização:** Estado, cidade, bairro, CEP, tipo de residência  
+**Financeiro:** Renda pessoal, outras rendas, patrimônio, contas bancárias, cartões  
+**Profissional:** Tipo de funcionário, tempo no trabalho, profissão, código de profissão  
+**Contato:** Telefones (residencial, móvel, profissional), email  
+**Documentação:** Flags para CPF, RG, documentação, comprovante de renda
 
-Padronização de textos e categorias
+---
 
-Conversão de colunas para tipos adequados
+## 📖 Referências
 
-Checagem de outliers e tratamento quando necessário
+- **Dataset:** [Credit Dataset](https://raw.githubusercontent.com/diogenesjusto/FIAP/master/dados/credit.csv)
+- **Documentação:**
+  - [Pandas Documentation](https://pandas.pydata.org/)
+  - [XGBoost Documentation](https://xgboost.readthedocs.io/)
+  - [Scikit-learn Documentation](https://scikit-learn.org/)
+- **Instituição:** FIAP
 
-Criação do arquivo final credit_clean.csv
+---
 
-Esse arquivo será usado pelos outros integrantes nas análises.
+## ✨ Conclusão Geral
 
+Este projeto demonstrou o processo completo de análise de dados em crédito, desde a limpeza até a modelagem preditiva. Embora o modelo final tenha apresentado limitações, a **análise exploratória forneceu insights valiosos** sobre os fatores associados a inadimplência e as limitações dos dados disponíveis. O trabalho reforça a importância de dados de qualidade e variáveis adequadas para construção de modelos de crédito efetivos.
 
-### Modelo de Machine Learning
+---
 
-Um classificador simples foi implementado com o objetivo de:
-
-Testar o comportamento dos dados após a limpeza
-
-Avaliar a capacidade de prever bons/mau pagadores
-
-O notebook apresenta:
-
-Separação entre treino e teste
-
-Treinamento do modelo
-
-Predições
-
-Accuracy
-
-Matrix de confusão
-
-Classification report
-
-
-### Notas Importantes
-
-Todos os gráficos possuem explicações logo abaixo.
-
-O notebook é inteiramente comentado para facilitar o entendimento do professor.
-
-O repositório está organizado para facilitar correção e reuso.
-
-O arquivo final credit_clean.csv é o dataset utilizado nas análises.
-
-
-### Integrantes
-
-Eduardo Henrique Silva de Amorim \
-Maria Eduarda Ferreira \
-Pedro Henrique Bomfim Wolski \
-Thiago Pereira de Jesus Souza
-
-Caso qualquer trecho precise de revisão ou explicação extra, estamos à disposição.
