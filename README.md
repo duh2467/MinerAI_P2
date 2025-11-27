@@ -4,7 +4,7 @@
 
 **Mineração de Dados - Trabalho Integrado Final**
 
-Professora: Vagner S. Macedo  
+Professor: Vagner S. Macedo  
 Período: 2024
 
 </div>
